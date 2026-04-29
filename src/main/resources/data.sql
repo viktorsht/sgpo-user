@@ -27,7 +27,7 @@ VALUES
     ('Rota Caxias - Timon', 'Caxias', 'Timon', '12:00:00', 90.00, 50),
     ('Rota Timon - Teresina', 'Timon', 'Teresina', '14:30:00', 80.00, 50);
 
-INSERT INTO users (user_id, email, name, phone, password)
+INSERT IGNORE INTO users (user_id, email, name, phone, password)
 SELECT 
     n + IFNULL((SELECT MAX(user_id) FROM users), 0),
     CONCAT('cliente', n, '@gmail.com'),
