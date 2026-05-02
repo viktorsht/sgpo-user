@@ -37,16 +37,29 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/health").permitAll()
-                        .anyRequest().authenticated())
-                .csrf(csrf -> csrf.disable())
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+    .securityMatcher("/**")
+    .authorizeHttpRequests(auth -> auth
+        .requestMatchers("/login", "/users/register", "/health").permitAll()
+        .anyRequest().authenticated()
+    )
+    .csrf(csrf -> csrf.disable())
+    .oauth2ResourceServer(oauth2 -> oauth2
+        .jwt(Customizer.withDefaults())
+    );
 
-        return http.build();
+        // http
+        //         .securityMatcher("/**")
+        //         .authorizeHttpRequests(authorize -> authorize
+        //                 .requestMatchers("/login", "/users/register", "/health").permitAll()
+        //                 // .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
+        //                 // .requestMatchers(HttpMethod.POST, "/login").permitAll()
+        //                 // .requestMatchers(HttpMethod.GET, "/health").permitAll()
+        //                 .anyRequest().authenticated())
+        //         .csrf(csrf -> csrf.disable())
+        //         .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+        //         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        // return http.build();
     }
 
     @Bean
