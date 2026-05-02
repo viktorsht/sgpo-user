@@ -37,16 +37,17 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-    .securityMatcher("/**")
-    .authorizeHttpRequests(auth -> auth
-        .requestMatchers("/login", "/users/register", "/health").permitAll()
-        .anyRequest().authenticated()
-    )
-    .csrf(csrf -> csrf.disable())
-    .oauth2ResourceServer(oauth2 -> oauth2
-        .jwt(Customizer.withDefaults())
-    );
+            .securityMatcher("/**")
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/login", "/users/register", "/health").permitAll()
+                .anyRequest().authenticated()
+            )
+            .csrf(csrf -> csrf.disable())
+            .oauth2ResourceServer(oauth2 -> oauth2
+                .jwt(Customizer.withDefaults())
+            );
 
+        return http.build();
         // http
         //         .securityMatcher("/**")
         //         .authorizeHttpRequests(authorize -> authorize
